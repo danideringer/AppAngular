@@ -20,21 +20,22 @@ export class DetailStationPage {
 
   station: any;
   stationId: any;
-  stationData: any;
   form: FormGroup;
   timeRange = [
     {name: "Last week", value: 7},
     {name: "Last 15 days", value: 15},
     {name: "Last month", value: 30}
   ];
+
   loader: any;
+  graphData:any;
+  segment: string = 'GRAPH';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder, private api: ApiProvider, private loadingCtrl: LoadingController) {
   }
 
   presentLoading() {
     this.loader = this.loadingCtrl.create();
-
     this.loader.present();
   }
 
@@ -43,14 +44,15 @@ export class DetailStationPage {
     this.loadData();
   }
 
+
   loadData(from: number = 0, to: number = 0){
     this.presentLoading();
-    this.api.getDevice(this.stationId, from, to)//1520504773)
+    this.api.getDevice(this.stationId, from, to)
       .subscribe((data) => {
         this.station = data;
         this.initComp();
+        this.showGraph(this.station);
         this.loader.dismiss();
-        this.showGraph(this.station, from, to);
       });
   }
 
@@ -60,30 +62,37 @@ export class DetailStationPage {
 
 
   createForm() {
-    console.log('create form');
     this.form = this.fb.group({
       variable: [this.station.data[0], Validators.required],
       timeRange: [this.timeRange[0], Validators.required]           
     })
-    
+
     this.form.get("variable").valueChanges
       .subscribe(data => {
-        //this.loadData();
-        console.log(data);
-      })
+        this.showGraph(this.station);
+      })  
 
     this.form.get("timeRange").valueChanges
       .subscribe(data => {
         let from = moment().subtract(data.value, 'day').unix();
         let to = moment().unix();
         this.loadData(from, to);
-        console.log(data);
+        this.showGraph(this.station);
       })
   }
 
-  showGraph(station: any, from: number, to:number ){
-    this.station.data
-    this.station.name
-    this.station.data.values
+  showGraph(station: any){
+    const selectedVar = this.form.get('variable').value;
+
+    const variable = this.station['data'].find((item) => {
+      return item.id === selectedVar.id
+    })
+    
+    if (variable) {
+      this.graphData = {
+        names: variable.name,
+        values: variable.values
+      }
+    }
   }
 }

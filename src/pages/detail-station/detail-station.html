@@ -28,7 +28,7 @@
       <ion-col>
         <div>Variables</div>
         <ion-select formControlName="variable">
-          <ion-option *ngFor = "let v of station.data" [value]="v">{{ v.name }}</ion-option>
+          <ion-option *ngFor = "let v of station.data" [value]="v">{{v.name}}</ion-option>
         </ion-select> 
       </ion-col>
       <ion-col>
@@ -40,7 +40,7 @@
     </ion-row>
   </form>
   <div padding>
-    <ion-segment [(ngModel)]="DATOS">
+    <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="GRAPH">
         Graphs
       </ion-segment-button>
@@ -49,9 +49,9 @@
       </ion-segment-button>
     </ion-segment>
   </div>
-  <div [ngSwitch]="GRAPH">
-    <ion-list *ngSwitchCase="'Graph'">
-    <graph-station [data] = "station"></graph-station>
+  <div [ngSwitch]="segment">
+    <ion-list *ngSwitchCase="'GRAPH'">
+          <graph-station [data] = "graphData"></graph-station>
     </ion-list>
     <ion-list *ngSwitchCase="'Table'"></ion-list>  
   </div>

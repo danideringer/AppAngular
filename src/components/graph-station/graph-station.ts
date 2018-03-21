@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges} from '@angular/core';
 import * as HighCharts from 'highcharts';
+
 /**
- * Generated class for the GraphStationComponent component.
+ * Generated class for the HeroGraphicComponent component.
  *
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
@@ -10,21 +11,27 @@ import * as HighCharts from 'highcharts';
   selector: 'graph-station',
   templateUrl: 'graph-station.html'
 })
-export class GraphStationComponent {
-
+export class GraphStationComponent implements OnChanges {
+  _data: any;
   @Input()
   data: any;
 
   constructor() {
   }
-
+  
   ngOnChanges(changes: any) {
-      if( changes.data.currentValue != undefined ) {
-        this.initChart();
+      if( changes && changes.data && changes.data.currentValue != undefined ) {
+        console.log("aaddd");
+        this._data = this.data;
+      }
+
+      if( this._data ) {
+          this.initChart();
       }
   }
 
   initChart(){
+    console.log(this._data);
     HighCharts.chart('container', {
         chart: {
             type: 'spline'
@@ -47,7 +54,7 @@ export class GraphStationComponent {
         },
         yAxis: {
             title: {
-                text: 'Value'
+                text: 'Snow depth (m)'
             },
             min: 0
         },
@@ -65,16 +72,13 @@ export class GraphStationComponent {
         },
     
         series: [{
-            name: 'hola',
-            //data: this.data['wins'].map((item) => {
-            //    return [item.date, item.value];
-            //})
-            }, {
-            name: 'Loses',
-
-        }
+            name: 'Hola',
+            data: this._data['values'].map((item) => {
+               // console.log([item.timestamp, item.value]);
+                return [item.timestamp, +item.value];
+            })
+            }, 
         ]
         });
   }
-
 }
