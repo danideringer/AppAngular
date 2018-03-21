@@ -1,0 +1,59 @@
+<!--
+  Generated template for the DetailStationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{station?.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf = "station">
+  <ion-card >
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="http://www.cm.colpos.mx/meteoro/agroest1m.jpg">
+      </ion-avatar>
+      <h2>{{station.name}}</h2>
+    </ion-item>
+  </ion-card>
+
+  <form [formGroup] = "form" *ngIf="form">
+    <ion-row>
+      <ion-col>
+        <div>Variables</div>
+        <ion-select formControlName="variable">
+          <ion-option *ngFor = "let v of station.data" [value]="v">{{ v.name }}</ion-option>
+        </ion-select> 
+      </ion-col>
+      <ion-col>
+        <div>Time range</div>
+        <ion-select formControlName="timeRange">
+            <ion-option *ngFor = "let date of timeRange" [value]="date">{{ date.name }}</ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </form>
+  <div padding>
+    <ion-segment [(ngModel)]="DATOS">
+      <ion-segment-button value="GRAPH">
+        Graphs
+      </ion-segment-button>
+      <ion-segment-button value="TABLE">
+        Tables
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <div [ngSwitch]="GRAPH">
+    <ion-list *ngSwitchCase="'Graph'">
+    <graph-station [data] = "station"></graph-station>
+    </ion-list>
+    <ion-list *ngSwitchCase="'Table'"></ion-list>  
+  </div>
+</div>
+</ion-content>

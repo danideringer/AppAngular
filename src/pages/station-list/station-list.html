@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+ 
+</ion-header>
+
+<ion-content padding class="card-background-page">
+    <ion-card *ngFor="let station of frameData">
+        <button ion-item (tap)="getDetailStation(station)" >
+            <img src="http://www.cm.colpos.mx/meteoro/agroest1m.jpg">
+            <div class="card-title">{{station.name}}</div>
+        </button>
+        <ion-item>
+            <ion-slides >
+                <ion-slide style="background-color: blue" *ngFor="let variable of station.latest_data" >
+                    <h2>{{variable.name}}: </h2><h3>{{variable.value}} </h3>
+                </ion-slide>
+            </ion-slides>    
+        </ion-item>
+    </ion-card>
+</ion-content>
