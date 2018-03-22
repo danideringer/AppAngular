@@ -40,7 +40,7 @@ export class DetailStationPage {
   }
 
   ionViewDidLoad() {
-    this.stationId = this.navParams.get("station").id;
+    this.stationId = 1; //this.navParams.get("station").id;
     this.loadData();
   }
 
@@ -82,17 +82,35 @@ export class DetailStationPage {
   }
 
   showGraph(station: any){
-    const selectedVar = this.form.get('variable').value;
+    let selectedVar = this.form.get('variable').value;
 
-    const variable = this.station['data'].find((item) => {
-      return item.id === selectedVar.id
+    if (!Array.isArray(selectedVar)) {
+      selectedVar = [selectedVar];
+    }
+
+
+    const selectedMap = selectedVar.map((item) => item.id);
+
+
+    const variables = this.station['data'].filter((item) => {
+      return selectedMap.includes(item.id);
     })
-    
-    if (variable) {
+
+    if (variables) {
+      
+      const gd = variables.map((v) => {
+        return {
+          name: v.name,
+          values: v.values,
+          symbol: v.symbol
+        }
+      });
+
       this.graphData = {
-        names: variable.name,
-        values: variable.values
+        variables: gd,
+        rangeGraph: this.form.get("timeRange").value 
       }
+      console.log(this.graphData.variables)
     }
   }
 }

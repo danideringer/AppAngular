@@ -27,7 +27,7 @@
     <ion-row>
       <ion-col>
         <div>Variables</div>
-        <ion-select formControlName="variable">
+        <ion-select formControlName="variable" multiple ="true" okText="Okay" cancelText="Cancel">
           <ion-option *ngFor = "let v of station.data" [value]="v">{{v.name}}</ion-option>
         </ion-select> 
       </ion-col>
