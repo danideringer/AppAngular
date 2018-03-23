@@ -1,4 +1,17 @@
-<!-- Generated template for the TableStationComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-navbar>
+  <ion-title align-left>Data of the {{data?.rangeTable['name']}}</ion-title>
+</ion-navbar>
+
+<ion-item-group *ngIf = "series">
+  <ion-item-divider color="light" *ngFor = "let item of series" >{{item.name}} {{item.symbols}}
+    <ion-grid>
+      <ion-item>
+        <ion-row justify-content-between *ngFor = "let item2 of item.data">
+          <ion-col col-5>{{item2.value}}</ion-col>
+          <ion-col col-5>{{item2.timestamp}}</ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-grid>
+  </ion-item-divider>
+</ion-item-group>
+

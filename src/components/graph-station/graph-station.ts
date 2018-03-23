@@ -45,18 +45,6 @@ export class GraphStationComponent implements OnChanges {
     });
   }
 
-  /*getSymbolOfSerie(symbols){
-    if (!Array.isArray(symbols)) {
-        symbols = [symbols];
-    }
-
-    return symbols.map((item) => {
-        return [item.name]
-    })
-  }*/
-  
-
-
   initChart(){
     HighCharts.chart('container', {
         chart: {

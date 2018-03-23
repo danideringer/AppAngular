@@ -29,7 +29,9 @@ export class DetailStationPage {
 
   loader: any;
   graphData:any;
+  tableData: any;
   segment: string = 'GRAPH';
+  dateString: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder, private api: ApiProvider, private loadingCtrl: LoadingController) {
   }
@@ -51,7 +53,7 @@ export class DetailStationPage {
       .subscribe((data) => {
         this.station = data;
         this.initComp();
-        this.showGraph(this.station);
+        this.showData(this.station);
         this.loader.dismiss();
       });
   }
@@ -69,29 +71,27 @@ export class DetailStationPage {
 
     this.form.get("variable").valueChanges
       .subscribe(data => {
-        this.showGraph(this.station);
+        this.showData(this.station);
       })  
 
     this.form.get("timeRange").valueChanges
       .subscribe(data => {
         let from = moment().subtract(data.value, 'day').unix();
         let to = moment().unix();
+        this.dateString = moment.unix(data.value).format("MM/DD/YYYY");
         this.loadData(from, to);
-        this.showGraph(this.station);
+        this.showData(this.station);
       })
   }
 
-  showGraph(station: any){
+  showData(station: any){
     let selectedVar = this.form.get('variable').value;
 
     if (!Array.isArray(selectedVar)) {
       selectedVar = [selectedVar];
     }
 
-
     const selectedMap = selectedVar.map((item) => item.id);
-
-
     const variables = this.station['data'].filter((item) => {
       return selectedMap.includes(item.id);
     })
@@ -109,6 +109,11 @@ export class DetailStationPage {
       this.graphData = {
         variables: gd,
         rangeGraph: this.form.get("timeRange").value 
+      }
+
+      this.tableData = {
+        variables: gd,
+        rangeTable: this.form.get("timeRange").value 
       }
       console.log(this.graphData.variables)
     }

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
+import { IonicPage } from 'ionic-angular';
+import * as moment from 'moment';
 /**
  * Generated class for the TableStationComponent component.
  *
@@ -11,12 +12,40 @@ import { Component } from '@angular/core';
   templateUrl: 'table-station.html'
 })
 export class TableStationComponent {
+  _data: any;
+  series: any;
 
-  text: string;
-
+  @Input()
+  data: any;
+  
   constructor() {
-    console.log('Hello TableStationComponent Component');
-    this.text = 'Hello World';
   }
 
+  ngOnChanges(changes: any) {
+    if( changes && changes.data && changes.data.currentValue != undefined ) {
+      this._data = this.data;
+      this.createSeries();
+     // this.initChart();
+    }
+  } 
+
+  createSeries() {
+    this.series = this._data.variables.map((item) => {
+        return {
+            name: item.name,
+            symbols: item.symbol,
+            data: this.getDataOfSerie(item.values)
+        }
+    })
+    console.log(this.series)
+  }
+
+  getDataOfSerie(values) {
+    return values.map((item) => {
+        return {
+          timestamp: moment.unix(item.timestamp).format("MM/DD/YYYY"), 
+          value: +item.value
+        }
+    });
+  }
 }

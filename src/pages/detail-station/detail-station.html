@@ -51,9 +51,11 @@
   </div>
   <div [ngSwitch]="segment">
     <ion-list *ngSwitchCase="'GRAPH'">
-          <graph-station [data] = "graphData"></graph-station>
+      <graph-station [data] = "graphData"></graph-station>
     </ion-list>
-    <ion-list *ngSwitchCase="'Table'"></ion-list>  
+    <ion-list *ngSwitchCase="'TABLE'">
+      <table-station [data] = "tableData"></table-station>
+    </ion-list>  
   </div>
 </div>
 </ion-content>
