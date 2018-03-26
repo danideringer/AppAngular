@@ -66,12 +66,11 @@ export class GraphStationComponent implements OnChanges {
         yAxis: {
             title: {
                 headerFormat: '<b>{series.name}</b><br>'
-            },
-            min: 0
+            }
         },
         tooltip: {
             headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '{point.x:%e. %b}: {point.y:.2f} ' + this.series['symbols']
+            pointFormat: '{point.x:%e. %b}: {point.y:.2f} '
         },
     
         plotOptions: {

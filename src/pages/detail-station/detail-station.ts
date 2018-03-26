@@ -30,6 +30,7 @@ export class DetailStationPage {
   loader: any;
   graphData:any;
   tableData: any;
+  googleData: any;
   segment: string = 'GRAPH';
   dateString: any;
 
@@ -42,7 +43,7 @@ export class DetailStationPage {
   }
 
   ionViewDidLoad() {
-    this.stationId = 1; //this.navParams.get("station").id;
+    this.stationId = this.navParams.get("station").id;
     this.loadData();
   }
 
@@ -95,6 +96,8 @@ export class DetailStationPage {
     const variables = this.station['data'].filter((item) => {
       return selectedMap.includes(item.id);
     })
+    
+    console.log(this.station['data'])
 
     if (variables) {
       
@@ -115,7 +118,10 @@ export class DetailStationPage {
         variables: gd,
         rangeTable: this.form.get("timeRange").value 
       }
-      console.log(this.graphData.variables)
+    }
+    let geoLocation;
+    this.googleData = {
+      variables: geoLocation
     }
   }
 }

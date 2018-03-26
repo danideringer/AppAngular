@@ -22,40 +22,44 @@
       <h2>{{station.name}}</h2>
     </ion-item>
   </ion-card>
-
-  <form [formGroup] = "form" *ngIf="form">
-    <ion-row>
-      <ion-col>
-        <div>Variables</div>
-        <ion-select formControlName="variable" multiple ="true" okText="Okay" cancelText="Cancel">
-          <ion-option *ngFor = "let v of station.data" [value]="v">{{v.name}}</ion-option>
-        </ion-select> 
-      </ion-col>
-      <ion-col>
-        <div>Time range</div>
-        <ion-select formControlName="timeRange">
-            <ion-option *ngFor = "let date of timeRange" [value]="date">{{ date.name }}</ion-option>
-        </ion-select>
-      </ion-col>
-    </ion-row>
-  </form>
-  <div padding>
-    <ion-segment [(ngModel)]="segment">
-      <ion-segment-button value="GRAPH">
-        Graphs
-      </ion-segment-button>
-      <ion-segment-button value="TABLE">
-        Tables
-      </ion-segment-button>
-    </ion-segment>
+  <ion-card>
+    <google-map [data] = "googleData"></google-map> 
+  </ion-card>
+    <ion-card>
+        <form [formGroup] = "form" *ngIf="form">
+          <ion-row>
+            <ion-col>
+              <div>Variables</div>
+              <ion-select formControlName="variable" multiple ="true" okText="Okay" cancelText="Cancel">
+                <ion-option *ngFor = "let v of station.data" [value]="v">{{v.name}}</ion-option>
+              </ion-select> 
+            </ion-col>
+            <ion-col>
+              <div>Time range</div>
+              <ion-select formControlName="timeRange">
+                  <ion-option *ngFor = "let date of timeRange" [value]="date">{{ date.name }}</ion-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </form>
+        <div padding>
+          <ion-segment [(ngModel)]="segment">
+            <ion-segment-button value="GRAPH">
+              Graphs
+            </ion-segment-button>
+            <ion-segment-button value="TABLE">
+              Tables
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+        <div [ngSwitch]="segment">
+          <ion-list *ngSwitchCase="'GRAPH'">
+            <graph-station [data] = "graphData"></graph-station>
+          </ion-list>
+          <ion-list *ngSwitchCase="'TABLE'">
+            <table-station [data] = "tableData"></table-station>
+          </ion-list>  
+        </div>
+    </ion-card>
   </div>
-  <div [ngSwitch]="segment">
-    <ion-list *ngSwitchCase="'GRAPH'">
-      <graph-station [data] = "graphData"></graph-station>
-    </ion-list>
-    <ion-list *ngSwitchCase="'TABLE'">
-      <table-station [data] = "tableData"></table-station>
-    </ion-list>  
-  </div>
-</div>
 </ion-content>
