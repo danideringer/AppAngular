@@ -20,6 +20,7 @@ export class StationListPage {
   }
 
   ionViewDidLoad() {
+    console.log("huliooooooW")
     this.apiProv.getAll()
       .subscribe((data) => {
         this.frameData = data;

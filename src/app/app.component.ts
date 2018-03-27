@@ -15,26 +15,11 @@ export class MyApp {
   allDevice: any;
   pages: Array<{title: string, component: any, params: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private apiProv: ApiProvider) {
-    this.initializeApp();
-    this.burguerMenu();
-    this.apiProv.getAll()
-      .subscribe((data) => {
-        this.allDevice = data;
-        this.allDevice.map((item) => {
-          return this.allDevice.push({
-            title: item.name,
-            component: 'DetailStationPage',
-            params: item
-          })
-        })
-      })
-  }
+  rootPage = 'StationListPage';
 
-  burguerMenu(){
-    this.pages = [
-      { title: 'Home', component: 'DetailStationPage' , params:' '}
-    ];
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+    this.initializeApp();
+
   }
 
   initializeApp() {
@@ -49,6 +34,6 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.push(page.component, {data: page.params});
+    this.nav.push(page.component);
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiProvider } from './../../providers/api/api';
 import * as moment from 'moment';
@@ -33,8 +33,10 @@ export class DetailStationPage {
   googleData: any;
   segment: string = 'GRAPH';
   dateString: any;
+  from: any;
+  to: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder, private api: ApiProvider, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private fb: FormBuilder, private api: ApiProvider, private loadingCtrl: LoadingController) {
   }
 
   presentLoading() {
@@ -69,7 +71,7 @@ export class DetailStationPage {
       variable: [this.station.data[0], Validators.required],
       timeRange: [this.timeRange[0], Validators.required]           
     })
-
+    console.log(this.station.data['value'])
     this.form.get("variable").valueChanges
       .subscribe(data => {
         this.showData(this.station);
@@ -77,12 +79,30 @@ export class DetailStationPage {
 
     this.form.get("timeRange").valueChanges
       .subscribe(data => {
-        let from = moment().subtract(data.value, 'day').unix();
-        let to = moment().unix();
+        this.from = moment().subtract(data.value, 'day').unix();
+        this.to = moment().unix();
         this.dateString = moment.unix(data.value).format("MM/DD/YYYY");
-        this.loadData(from, to);
-        this.showData(this.station);
+        this.checkData();
       })
+  }
+
+  checkData(){
+    if (this.station.data['value'] === "undefined"){
+      this.checkData();
+    }
+    else{
+      this.loadData(this.from, this.to);
+      this.showData(this.station)
+    }
+  }
+  
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'New Friend!',
+      subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
   showData(station: any){
