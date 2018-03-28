@@ -20,15 +20,16 @@ export class StationListPage {
   }
 
   ionViewDidLoad() {
-    console.log("huliooooooW")
-    this.apiProv.getAll()
+    this.apiProv.device$
       .subscribe((data) => {
         this.frameData = data;
       })
+    this.apiProv.getAll().subscribe();
   }
+
+
 
   getDetailStation(frameData){
     this.navCtrl.push("DetailStationPage", {station: frameData})
   }
-
 }
