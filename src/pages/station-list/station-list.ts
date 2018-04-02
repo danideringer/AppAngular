@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from './../../providers/api/api';
+import { StationModel } from './../../models/station.model';
 
 /**
  * Generated class for the StationListPage page.
@@ -24,7 +25,7 @@ export class StationListPage {
 
   ionViewDidLoad() {
     this.apiProv.device$
-      .subscribe((data) => {
+      .subscribe((data: StationModel) => {
         this.frameData = data;
       })
     this.apiProv.getAll().subscribe();

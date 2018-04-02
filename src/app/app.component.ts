@@ -31,14 +31,6 @@ export class MyApp {
     });
   }
 
-  for(let value of menu) {
-    this.pages.push(
-      { title: value.name, component: 'StationDetailsPage', params: value.id });
-  }
-  initializeBurguerMenu(){
-    {title: "Home", component: 'StationListPage',  }
-  }
-
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario

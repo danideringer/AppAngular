@@ -50,10 +50,10 @@ export class ApiProvider {
       url = `${url}from=${from}&to=${to}`;
     }
 
-    return this.http.get(url);
-      /*.map((data) => {
+    return this.http.get(url)
+      .map((data) => {
         return new StationModel(data);
-      });*/
+      });
   }
 
   getTable(id: number){

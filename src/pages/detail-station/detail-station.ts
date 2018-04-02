@@ -46,19 +46,15 @@ export class DetailStationPage {
   }
 
   ionViewDidLoad() {
-    this.stationId = this.navParams.get("station").id;
-    console.log(this.stationId)
+    this.stationId = 3; //this.navParams.get("station").id;
     this.loadData();
   }
 
   loadData(from: number = 0, to: number = 0){
     this.presentLoading();
     this.api.getDevice(this.stationId, from, to)
-      .subscribe((data /*data: StationModel*/) => {
-        //console.log('hhhhh',data);
-        //console.log(data.getLatitude());
-        //console.log(data.mifun());
-        this.station = data;
+      .subscribe((data: StationModel) => {     
+        this.station = data; // TODA LA ESTACIÓN 
         this.initComp();
         this.showData(this.station);
         this.loader.dismiss();
@@ -69,7 +65,6 @@ export class DetailStationPage {
     if (!this.form) this.createForm();
   }
 
-
   createForm() {
     this.form = this.fb.group({
       variable: [this.station.data[0], Validators.required],
@@ -77,7 +72,7 @@ export class DetailStationPage {
     })
 
     this.form.get("variable").valueChanges
-      .subscribe(data => {
+      .subscribe((data) => {
         this.showData(this.station);
       })  
 
@@ -86,11 +81,11 @@ export class DetailStationPage {
         this.from = moment().subtract(data.value, 'day').unix();
         this.to = moment().unix();
         this.dateString = moment.unix(data.value).format("MM/DD/YYYY");
-        this.checkData();
+      //  this.checkData();
       })
   }
 
-  checkData(){
+  /*checkData(){
     if (this.station.data['value'] === ""){
       this.checkData();
     }
@@ -107,7 +102,7 @@ export class DetailStationPage {
       buttons: ['OK']
     });
     alert.present();
-  }
+  }*/
 
   showData(station: any){
     let selectedVar = this.form.get('variable').value;
@@ -120,8 +115,6 @@ export class DetailStationPage {
     const variables = this.station['data'].filter((item) => {
       return selectedMap.includes(item.id);
     })
-    
-    console.log(this.station)
 
     if (variables) {
       
@@ -143,18 +136,7 @@ export class DetailStationPage {
         rangeTable: this.form.get("timeRange").value 
       }
     }
-    
-    let geoLocation = {
-        latitude: this.station.latitude,
-        longitude: this.station.longitude 
-    };
-
-    console.log(geoLocation)
-    
-    this.googleData = {
-      variables: geoLocation
-    }
-
-    console.log("aaaaa ", this.googleData );
+    this.googleData = this.station.getGeoLocation();
+    console.log("11111111111", this.station.getGeoLocation());
   }
 }
