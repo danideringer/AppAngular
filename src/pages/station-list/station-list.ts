@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from './../../providers/api/api';
+
 /**
  * Generated class for the StationListPage page.
  *
@@ -16,8 +17,10 @@ import { ApiProvider } from './../../providers/api/api';
 export class StationListPage {
 
   frameData: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProv: ApiProvider) {
-  }
+  searchQuery: string = '';
+  items: any[];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProv: ApiProvider) {}
 
   ionViewDidLoad() {
     this.apiProv.device$
@@ -27,9 +30,22 @@ export class StationListPage {
     this.apiProv.getAll().subscribe();
   }
 
+  getDetailStation(station){
+    console.log(station.name)
+    this.navCtrl.push("DetailStationPage", {station: station})
+  }
 
 
-  getDetailStation(frameData){
-    this.navCtrl.push("DetailStationPage", {station: frameData})
+  getItems(ev: any) {
+
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.frameData = this.frameData.filter((item) => {
+        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
   }
 }

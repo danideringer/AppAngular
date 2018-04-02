@@ -3,8 +3,11 @@ import { Injectable } from '@angular/core';
 
 import { checkBindingNoChanges } from '@angular/core/src/view/util';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
-import 'rxjs/add/operator/do'
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map'
 
+
+import { StationModel } from './../../models/station.model';
 /*
   Generated class for the ApiProvider provider.
 
@@ -20,12 +23,13 @@ export class ApiProvider {
   constructor(public http: HttpClient) {}
 
   get device$(){
-    return  this.devices.asObservable();
+    return this.devices.asObservable();
   }
 
   getAll(){
     return this.http.get('http://localhost:3000/api/v1/devices_latest_data/')
       .do((data) => {
+        console.log(data)
         this.devices.next(data);
       })
   }
@@ -47,6 +51,9 @@ export class ApiProvider {
     }
 
     return this.http.get(url);
+      /*.map((data) => {
+        return new StationModel(data);
+      });*/
   }
 
   getTable(id: number){

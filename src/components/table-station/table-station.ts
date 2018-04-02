@@ -7,6 +7,7 @@ import * as moment from 'moment';
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+
 @Component({
   selector: 'table-station',
   templateUrl: 'table-station.html'
@@ -25,7 +26,6 @@ export class TableStationComponent {
     if( changes && changes.data && changes.data.currentValue != undefined ) {
       this._data = this.data;
       this.createSeries();
-     // this.initChart();
     }
   } 
 

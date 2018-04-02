@@ -28,9 +28,9 @@ export class GoogleMapComponent {
   }
 
   loadMap(){
-    let latitude = +this.data['latitude']; //position.coords.latitude;
-    let longitude = +this.data['longitude']; //position.coords.longitude;
-    console.log(latitude, longitude);
+    let latitude = +this.data.variables['latitude']; //position.coords.latitude;
+    let longitude = +this.data.variables['longitude']; //position.coords.longitude;
+    console.log(latitude, longitude); 
     
     // create a new map by passing HTMLElement
     let mapEle: HTMLElement = document.getElementById('map');

@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiProvider } from './../../providers/api/api';
 import * as moment from 'moment';
 
+import { StationModel } from './../../models/station.model';
+
 /**
  * Generated class for the DetailStationPage page.
  *
@@ -26,7 +28,6 @@ export class DetailStationPage {
     {name: "Last 15 days", value: 15},
     {name: "Last month", value: 30}
   ];
-
   loader: any;
   graphData:any;
   tableData: any;
@@ -46,14 +47,17 @@ export class DetailStationPage {
 
   ionViewDidLoad() {
     this.stationId = this.navParams.get("station").id;
+    console.log(this.stationId)
     this.loadData();
   }
-
 
   loadData(from: number = 0, to: number = 0){
     this.presentLoading();
     this.api.getDevice(this.stationId, from, to)
-      .subscribe((data) => {
+      .subscribe((data /*data: StationModel*/) => {
+        //console.log('hhhhh',data);
+        //console.log(data.getLatitude());
+        //console.log(data.mifun());
         this.station = data;
         this.initComp();
         this.showData(this.station);
@@ -71,7 +75,7 @@ export class DetailStationPage {
       variable: [this.station.data[0], Validators.required],
       timeRange: [this.timeRange[0], Validators.required]           
     })
-    console.log(this.station.data['value'])
+
     this.form.get("variable").valueChanges
       .subscribe(data => {
         this.showData(this.station);
@@ -87,7 +91,7 @@ export class DetailStationPage {
   }
 
   checkData(){
-    if (this.station.data['value'] === "undefined"){
+    if (this.station.data['value'] === ""){
       this.checkData();
     }
     else{
@@ -117,7 +121,7 @@ export class DetailStationPage {
       return selectedMap.includes(item.id);
     })
     
-    console.log(this.station['data'])
+    console.log(this.station)
 
     if (variables) {
       
@@ -139,9 +143,18 @@ export class DetailStationPage {
         rangeTable: this.form.get("timeRange").value 
       }
     }
-    let geoLocation;
+    
+    let geoLocation = {
+        latitude: this.station.latitude,
+        longitude: this.station.longitude 
+    };
+
+    console.log(geoLocation)
+    
     this.googleData = {
       variables: geoLocation
     }
+
+    console.log("aaaaa ", this.googleData );
   }
 }
