@@ -69,7 +69,18 @@ export class StationModel {
                   symbol: v.symbol
                 }
             });
-            return gd      
+            return gd
         }
+    }
+
+    getGd(variables){
+        const gd = variables.map((v) => {
+            return {
+              name: v.name,
+              values: v.values,
+              symbol: v.symbol
+            }
+        });
+        return gd 
     }
 }

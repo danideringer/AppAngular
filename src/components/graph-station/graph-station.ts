@@ -28,7 +28,11 @@ export class GraphStationComponent implements OnChanges {
       }
   }
 
+ 
   createSeries() {
+    if (!Array.isArray(this._data.variables)) {
+        this._data.variables = [this._data.variables];
+      }
       this.series = this._data.variables.map((item) => {
           return {
               name: item.name,
@@ -36,7 +40,6 @@ export class GraphStationComponent implements OnChanges {
               data: this.getDataOfSerie(item.values)
           }
       })
-      console.log(this.series)
   }
 
   getDataOfSerie(values) {

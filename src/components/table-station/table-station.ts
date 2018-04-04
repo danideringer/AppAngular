@@ -15,6 +15,7 @@ import * as moment from 'moment';
 export class TableStationComponent {
   _data: any;
   series: any;
+  dataOfSerie: any;
 
   @Input()
   data: any;
@@ -30,6 +31,9 @@ export class TableStationComponent {
   } 
 
   createSeries() {
+    if (!Array.isArray(this._data.variables)) {
+      this._data.variables = [this._data.variables];
+    }
     this.series = this._data.variables.map((item) => {
         return {
             name: item.name,
@@ -37,14 +41,13 @@ export class TableStationComponent {
             data: this.getDataOfSerie(item.values)
         }
     })
-    console.log(this.series)
   }
 
   getDataOfSerie(values) {
     return values.map((item) => {
         return {
           timestamp: moment.unix(item.timestamp).format("MM/DD/YYYY"), 
-          value: +item.value
+          value: item.value
         }
     });
   }

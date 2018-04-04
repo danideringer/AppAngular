@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { ApiProvider } from './../../providers/api/api';
-import { ForecastModels } from '../../models/forecast.models';
 
 /**
  * Generated class for the GetForecastComponent component.
@@ -31,7 +30,6 @@ export class GetForecastComponent {
         this.apiProv.getForecastHourly(this.cityCode['Key'])
           .subscribe(data => {
             this.hourlyForecast = data;
-            console.log(this.hourlyForecast)
           })
     })    
   }

@@ -76,10 +76,18 @@ export class DetailStationPage {
   }
 
   createForm() {
-    this.form = this.fb.group({
-      variable: [this.station.data[0], Validators.required],
-      timeRange: [this.timeRange[0], Validators.required]           
-    })
+    if (this.station.latitude) {
+      this.form = this.fb.group({
+        variable: [this.station.data[0], Validators.required],
+        timeRange: [this.timeRange[0], Validators.required]           
+      })
+    } else if(this.station.latitude === null){
+      this.form = this.fb.group({
+        variable: [this.station.data[3], Validators.required],
+        timeRange: [this.timeRange[3], Validators.required]           
+      })
+    }
+    
 
     this.form.get("variable").valueChanges
       .subscribe(data => {
@@ -138,7 +146,7 @@ export class DetailStationPage {
       latitude: this.station.latitude,
       longitude: this.station.longitude
     }
-
+   
     this.googleData = this.station.getGeoLocation();
   }
 

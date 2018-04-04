@@ -8,7 +8,6 @@ import 'rxjs/add/operator/map'
 
 
 import { StationModel } from './../../models/station.model';
-import { ForecastModels } from '../../models/forecast.models';
 /*
   Generated class for the ApiProvider provider.
 

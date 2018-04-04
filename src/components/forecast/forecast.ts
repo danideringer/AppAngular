@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { ApiProvider } from './../../providers/api/api';
-import { ForecastModels } from '../../models/forecast.models';
 import * as moment from 'moment';
 
 /**

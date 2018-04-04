@@ -6,7 +6,7 @@
   
 </ion-header>
 
-<ion-content padding>
+<ion-content padding  style = "background:rgb(225, 228, 228)">
   <div *ngIf = "station">
     
     <ion-card>
@@ -19,10 +19,19 @@
       <form [formGroup] = "form" *ngIf="form">
         <ion-row>
           <ion-col col-6>
-            <div>Variables</div>
-            <ion-select formControlName="variable" multiple ="true" okText="Okay" cancelText="Cancel" background-ios-color>
-              <ion-option *ngFor = "let v of variables" [value]="v">{{v.name}}</ion-option>
-            </ion-select> 
+            <ng-container padding *ngIf = "station.latitude !== null">
+                <div>Variables</div>
+                <ion-select formControlName="variable" multiple ="true" okText="Ok" cancelText="Cancel" background-ios-color>
+                  <ion-option *ngFor = "let v of variables" [value]="v">{{v.name}}</ion-option>
+                </ion-select>
+            </ng-container>
+            <ng-container padding *ngIf = "station.latitude === null">
+                <div>Variables</div>
+                <ion-select formControlName="variable" multiple ="true" okText="Ok" cancelText="Cancel" background-ios-color>
+                  <ion-option [value]="variables[2]" >{{variables[2].name}}</ion-option>
+                  <ion-option [value]="variables[3]" >{{variables[3].name}}</ion-option>
+                </ion-select>
+            </ng-container>
           </ion-col>
       
           <ion-col col-6>
@@ -61,7 +70,7 @@
         </div>
       </ng-container>
       <ng-container padding *ngIf = "station.latitude === null">
-        <div>
+        <ion-card>
           <ion-segment [(ngModel)]="segment">
               <ion-segment-button value="GRAPH">
                 Graphs
@@ -78,7 +87,7 @@
               <table-station [data] = "tableData"></table-station>
             </ion-list> 
           </div>
-        </div>
+        </ion-card>
       </ng-container>
     </ion-card>
   </div>
