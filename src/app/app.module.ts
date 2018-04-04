@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { Geolocation } from '@ionic-native/geolocation';
 import { ListPage } from '../pages/list/list';
-
+import { CustomTimePage } from './../pages/custom-time/custom-time';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ApiProvider } from '../providers/api/api';
@@ -13,7 +13,8 @@ import { ApiProvider } from '../providers/api/api';
 @NgModule({
   declarations: [
     MyApp,
-    ListPage
+    ListPage,
+    CustomTimePage
   ],
   imports: [
     BrowserModule,
@@ -23,7 +24,8 @@ import { ApiProvider } from '../providers/api/api';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ListPage
+    ListPage,
+    CustomTimePage
   ],
   providers: [
     StatusBar,

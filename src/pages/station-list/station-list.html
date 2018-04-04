@@ -3,28 +3,51 @@
   <ion-navbar>
       
       <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
+          <ion-icon text-uppercase name="menu"></ion-icon>
         </button>
-   <!-- <ion-title>Home</ion-title> --> 
 
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar searchbar-ios-input-search-icon-svg (ionInput)="getItems($event)"></ion-searchbar>
   </ion-navbar>
  
 </ion-header>
 
 <ion-content padding class="card-background-page">
-    <ion-card *ngFor="let station of frameData">
-        <button ion-item (tap)="getDetailStation(station)" >
-            <img src="http://www.cm.colpos.mx/meteoro/agroest1m.jpg">
-            <div class="card-title">{{station.name}}</div>
-        </button>
+    
+    <ion-card *ngFor="let station of items">
         <ion-item>
-            <ion-slides >
-                <ion-slide style="background-color: blue" *ngFor="let variable of station.latest_data" >
-                    <h2>{{variable.name}}: </h2><h3>{{variable.value}} </h3>
-                </ion-slide>
-            </ion-slides>    
+            <ion-avatar item-start>
+                <ion-icon ios="ios-car" md="md-car"></ion-icon>
+            </ion-avatar>
+            <h2>{{ station.name }}</h2>
         </ion-item>
+
+        <img src="http://www.cm.colpos.mx/meteoro/agroest1m.jpg">
+        <div class="card-title">  </div>
+        <div class="card-title">
+            <ion-grid>
+                <ion-row>
+                    <ion-slides >
+                        <ion-slide *ngFor="let variable of station.latest_data" >
+                            <h2> {{variable.name}}: </h2><h3> {{variable.value}} </h3>
+                        </ion-slide>
+                    </ion-slides>  
+                </ion-row>
+            </ion-grid>
+        </div>
+        <ion-row>
+            <ion-col>
+                <button ion-button (tap)="getDetailStation(station)" icon-left clear small>
+                <ion-icon name="thumbs-up"></ion-icon>
+                <div>Station details</div>
+                </button>
+            </ion-col>
+            <ion-col center text-center>
+                <ion-note>
+                11h ago
+                </ion-note>
+            </ion-col>
+        </ion-row>
     </ion-card>
+
 </ion-content>
 

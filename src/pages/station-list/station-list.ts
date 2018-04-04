@@ -19,7 +19,7 @@ export class StationListPage {
 
   frameData: any;
   searchQuery: string = '';
-  items: any[];
+  items: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProv: ApiProvider) {}
 
@@ -27,6 +27,7 @@ export class StationListPage {
     this.apiProv.device$
       .subscribe((data: StationModel) => {
         this.frameData = data;
+        this.initializeItems();
       })
     this.apiProv.getAll().subscribe();
   }
@@ -36,15 +37,16 @@ export class StationListPage {
     this.navCtrl.push("DetailStationPage", {station: station})
   }
 
+  initializeItems(){
+   this.items = this.frameData
+  }
 
   getItems(ev: any) {
-
-    // set val to the value of the searchbar
+    this.initializeItems()
     let val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.frameData = this.frameData.filter((item) => {
+      this.items = this.items.filter((item) => {
         return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }

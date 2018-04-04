@@ -11,7 +11,6 @@ export class StationModel {
         this.data = station && station.data || null;
         this.latitude = station && station.latitude || null;
         this.longitude = station && station.longitude || null;
-        console.log(this.latitude)
     }
 
     
@@ -34,24 +33,15 @@ export class StationModel {
     }
 
     getGeoLocaTionFromVehicleStation(){
-        /*const variables = this.station['data'].filter((item) => {
-            return selectedMap.includes(item.id);
-          })*/
-        /*if (this.data.id === 7){
-            const latitude = this.data.values
-            cons
-        }*/
+        let latitudeVar = this.data[0].values[0]
+        let longitudeVar = this.data[1].values[0]
         
-        
-        
-        const geoLocation = this.data.map((i) => {
-            return {
-                latitude: i.latitude[0],
-                longitude: i.longitude[0]
-            }
-        })
-
-        return this.googleApiShow(geoLocation)
+        const geoLocation = {
+            latitude: latitudeVar.value,
+            longitude: longitudeVar.value
+        }
+        console.log(geoLocation)
+       return this.googleApiShow(geoLocation)
     }
 
     googleApiShow(geoLocation){
@@ -61,4 +51,25 @@ export class StationModel {
         return this.googleData
     }
 
+    getSelectedVar(selectedVar: any){
+        if (!Array.isArray(selectedVar)) {
+            selectedVar = [selectedVar];
+          }
+        
+        const selectedMap = selectedVar.map((item) => item.id);
+        const variables = this.data.filter((item) => {
+            return selectedMap.includes(item.id);
+        })
+
+        if (variables){
+            const gd = variables.map((v) => {
+                return {
+                  name: v.name,
+                  values: v.values,
+                  symbol: v.symbol
+                }
+            });
+            return gd      
+        }
+    }
 }
