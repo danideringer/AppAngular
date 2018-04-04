@@ -14,5 +14,20 @@
 
 
 <ion-content padding>
-    <button ion-button block (click)="closeModal()">Close Modal</button>
+  <ion-row>
+    <ion-col>
+        <ion-item>
+          <ion-label>From</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="from"></ion-datetime>
+        </ion-item>
+    </ion-col>
+    <ion-col>
+        <ion-item>
+          <ion-label>To</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="to"></ion-datetime>
+        </ion-item>
+    </ion-col>
+  </ion-row>
+  <button ion-button block (click)="submitModal()">Submit</button>
+    <button ion-button block (click)="closeModal()" color="danger">Close</button>
 </ion-content>

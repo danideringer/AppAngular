@@ -1,0 +1,29 @@
+<ion-item-group *ngIf="dailyForecast">
+  <ion-item-divider color="light" *ngFor="let item of dailyForecast.DailyForecasts" >
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <h1> {{ getFormatDate(item.Date) }} </h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col col-4>
+            {{ item.Temperature.Maximum['Value'] }} {{ item.Temperature.Maximum['Unit'] }}
+          </ion-col>
+
+          <ion-col col-4>
+            <img src="https://vortex.accuweather.com/adc2010/images/slate/icons/{{item.Day.Icon}}.svg">
+          </ion-col>
+      </ion-row>
+      <ion-row>          
+          <ion-col col-4>
+              {{ item.Temperature.Minimum['Value'] }} {{ item.Temperature.Minimum['Unit'] }}
+          </ion-col>
+
+          <ion-col col-4>
+            <img src="https://vortex.accuweather.com/adc2010/images/slate/icons/{{item.Night.Icon}}.svg">
+          </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item-divider>
+</ion-item-group>

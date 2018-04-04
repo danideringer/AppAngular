@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map'
 
 
 import { StationModel } from './../../models/station.model';
+import { ForecastModels } from '../../models/forecast.models';
 /*
   Generated class for the ApiProvider provider.
 
@@ -35,12 +36,20 @@ export class ApiProvider {
   }
   
   getCityAccuweather(latitude: number, longitude: number){
-    return this.http.get(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=YVDPLfCRcdXjeut17arxlxzPlErqOjCp&q=${latitude}%2C${longitude}`)
+    return this.http.get(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=5bY5eqaA30ZpcVQmakQfmNr4I2YZGVi6&q=${latitude}%2C${longitude}`);
   }
 
-  getForecastAccuweather(cityCode: number){
-    return this.http.get(`http://dataservice.accuweather.com/forecasts/v1/daily/1day/${cityCode}?apikey=YVDPLfCRcdXjeut17arxlxzPlErqOjCp`)
-
+  getForecastHourly(cityCode: number){
+    return this.http.get(`http://dataservice.accuweather.com/forecasts/v1/hourly/1hour/${cityCode}?apikey=5bY5eqaA30ZpcVQmakQfmNr4I2YZGVi6`)
+      /*.map((data) => {
+        return new ForecastModels(data);
+      });*/
+  }
+  getForecastDays(cityCode: number){
+    return this.http.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityCode}?apikey=5bY5eqaA30ZpcVQmakQfmNr4I2YZGVi6&metric=true`)
+      /*.map((data) => {
+        return new ForecastModels(data);
+      });*/
   }
 
   getDevice(id: number, from: number = 0, to: number = 0){

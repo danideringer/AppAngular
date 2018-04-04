@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController  } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import * as moment from 'moment';
 
 /**
  * Generated class for the CustomTimePage page.
@@ -16,25 +17,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CustomTimePage {
   
-  form: FormGroup;
+  from: any;
+  to: any;
+  data: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private fb: FormBuilder) {
-   this.createForm();
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
   }
-  
-  createForm() {
-    this.form = this.fb.group({
-      variable: ["2", Validators.required],
-      timeRange: ["2", Validators.required]           
-    })
+
+  submitModal(){
+    this.data = {
+      from: moment(this.from).unix(),
+      to: moment(this.to).unix(),
+    }
+    this.viewCtrl.dismiss(this.data);
   }
   
   closeModal(){
     this.viewCtrl.dismiss();
   }
   
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CustomTimePage');
-  }
-
 }

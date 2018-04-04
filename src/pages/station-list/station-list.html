@@ -14,21 +14,45 @@
 <ion-content padding class="card-background-page">
     
     <ion-card *ngFor="let station of items">
-        <ion-item>
-            <ion-avatar item-start>
-                <ion-icon ios="ios-car" md="md-car"></ion-icon>
-            </ion-avatar>
-            <h2>{{ station.name }}</h2>
+        
+        <ion-item *ngIf = "station.latitude !== null" >  
+            <get-forecast [longitude] = "station.longitude" [latitude] = "station.latitude"></get-forecast>   
+            <ion-row>
+                    <ion-avatar item-start>
+                        <ion-icon ios="logo-apple" md="logo-apple"> {{ station.name }} </ion-icon>
+                    </ion-avatar>
+            </ion-row>
         </ion-item>
 
-        <img src="http://www.cm.colpos.mx/meteoro/agroest1m.jpg">
-        <div class="card-title">  </div>
+        <ion-item *ngIf = "station.latitude === null" > 
+            <ion-row>    
+                    <ion-avatar item-start>
+                        <ion-icon ios="ios-car" md="md-car"> {{ station.name }} </ion-icon>
+                    </ion-avatar>
+            </ion-row>
+        </ion-item>
+        
+        <ion-item *ngIf = "station.latitude !== null" >
+            <img src="http://www.cm.colpos.mx/meteoro/agroest1m.jpg">
+        </ion-item>
+        
+        <ion-item *ngIf = "station.latitude === null" >
+            <img src="https://get.pxhere.com/photo/car-vintage-wheel-automobile-retro-volkswagen-old-orange-vehicle-symbol-auto-style-classic-icon-mechanic-antique-car-retro-car-driving-car-city-car-land-vehicle-volkswagen-beetle-automobile-make-compact-car-subcompact-car-853203.jpg">
+        </ion-item>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-6>Batería</ion-col>
+                <ion-col col-6>Tmep</ion-col>
+            </ion-row>
+        </ion-grid>
         <div class="card-title">
             <ion-grid>
                 <ion-row>
                     <ion-slides >
                         <ion-slide *ngFor="let variable of station.latest_data" >
-                            <h2> {{variable.name}}: </h2><h3> {{variable.value}} </h3>
+                            <ion-item style="background: pink">
+                                <h2> {{variable.name}}: </h2><h3> {{variable.value}} </h3>
+                            </ion-item>
                         </ion-slide>
                     </ion-slides>  
                 </ion-row>
@@ -37,14 +61,9 @@
         <ion-row>
             <ion-col>
                 <button ion-button (tap)="getDetailStation(station)" icon-left clear small>
-                <ion-icon name="thumbs-up"></ion-icon>
-                <div>Station details</div>
+                        <ion-icon ios="ios-paper-plane" md="md-paper-plane" color = "blue"></ion-icon>
+                <div>More details</div>
                 </button>
-            </ion-col>
-            <ion-col center text-center>
-                <ion-note>
-                11h ago
-                </ion-note>
             </ion-col>
         </ion-row>
     </ion-card>

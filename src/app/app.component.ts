@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ApiProvider } from './../providers/api/api'
+import { ApiProvider } from './../providers/api/api';
 import { StationListPage } from '../pages/station-list/station-list';
 import { DetailStationPage } from './../pages/detail-station/detail-station'
 

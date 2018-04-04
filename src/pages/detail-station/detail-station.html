@@ -8,34 +8,24 @@
 
 <ion-content padding>
   <div *ngIf = "station">
-    <ion-card >
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="http://www.cm.colpos.mx/meteoro/agroest1m.jpg">
-        </ion-avatar>
-        <h2>{{station.name}}</h2>
-      </ion-item>
-    </ion-card>
     
     <ion-card>
       <google-map [data] = "googleData"></google-map> 
     </ion-card>
-
-    <button ion-button block (click)="openModal()">Open Modal</button>
-    
+   
     <ion-card src="http://dataservice.accuweather.com/forecasts/v1/daily/1day/301729?apikey=YVDPLfCRcdXjeut17arxlxzPlErqOjCp"></ion-card>
       
     <ion-card>
       <form [formGroup] = "form" *ngIf="form">
         <ion-row>
-          <ion-col>
+          <ion-col col-6>
             <div>Variables</div>
             <ion-select formControlName="variable" multiple ="true" okText="Okay" cancelText="Cancel" background-ios-color>
-              <ion-option *ngFor = "let v of station.data" [value]="v">{{v.name}}</ion-option>
+              <ion-option *ngFor = "let v of variables" [value]="v">{{v.name}}</ion-option>
             </ion-select> 
           </ion-col>
       
-          <ion-col>
+          <ion-col col-6>
             <div>Time range</div>
             <ion-select formControlName="timeRange" background-ios-color>
               <ion-option *ngFor = "let date of timeRange" [value]="date">{{ date.name }}</ion-option>
@@ -44,26 +34,52 @@
         </ion-row>
       </form>
       
-      <div padding>
-        <ion-segment [(ngModel)]="segment">
-          <ion-segment-button value="GRAPH">
-            Graphs
-          </ion-segment-button>
-          <ion-segment-button value="TABLE">
-            Tables
-          </ion-segment-button>
-        </ion-segment>
-      </div>
-      
-      <div [ngSwitch]="segment">
-        <ion-list *ngSwitchCase="'GRAPH'">
-          <graph-station [data] = "graphData"></graph-station>
-        </ion-list>
-        <ion-list *ngSwitchCase="'TABLE'">
-          <table-station [data] = "tableData"></table-station>
-        </ion-list>  
-      </div>
+      <ng-container padding *ngIf = "station.latitude !== null">
+        <div>
+          <ion-segment [(ngModel)]="segment">
+            <ion-segment-button value="GRAPH">
+              Graphs
+            </ion-segment-button>
+            <ion-segment-button value="TABLE">
+              Tables
+            </ion-segment-button>
+            <ion-segment-button value="FORECAST">
+              Forecast
+            </ion-segment-button>
+          </ion-segment>
+          <div [ngSwitch]="segment">
+              <ion-list *ngSwitchCase="'GRAPH'">
+                <graph-station [data] = "graphData"></graph-station>
+              </ion-list>
+              <ion-list *ngSwitchCase="'TABLE'">
+                <table-station [data] = "tableData"></table-station>
+              </ion-list>
+              <ion-list *ngSwitchCase="'FORECAST'">
+                <forecast [latitude]="forecastData.latitude" [longitude]="forecastData.longitude"></forecast>
+              </ion-list>   
+          </div>
+        </div>
+      </ng-container>
+      <ng-container padding *ngIf = "station.latitude === null">
+        <div>
+          <ion-segment [(ngModel)]="segment">
+              <ion-segment-button value="GRAPH">
+                Graphs
+              </ion-segment-button>
+              <ion-segment-button value="TABLE">
+                Tables
+            </ion-segment-button>
+          </ion-segment>
+          <div [ngSwitch]="segment">
+            <ion-list *ngSwitchCase="'GRAPH'">
+              <graph-station [data] = "graphData"></graph-station>
+            </ion-list>
+            <ion-list *ngSwitchCase="'TABLE'">
+              <table-station [data] = "tableData"></table-station>
+            </ion-list> 
+          </div>
+        </div>
+      </ng-container>
     </ion-card>
-    
   </div>
 </ion-content>

@@ -18,6 +18,7 @@ import { StationModel } from './../../models/station.model';
 export class StationListPage {
 
   frameData: any;
+  cityCode: any;
   searchQuery: string = '';
   items: any;
 
@@ -33,7 +34,6 @@ export class StationListPage {
   }
 
   getDetailStation(station){
-    console.log(station.name)
     this.navCtrl.push("DetailStationPage", {station: station})
   }
 
