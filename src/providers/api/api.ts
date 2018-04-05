@@ -39,7 +39,7 @@ export class ApiProvider {
   }
 
   getForecastHourly(cityCode: number){
-    return this.http.get(`http://dataservice.accuweather.com/forecasts/v1/hourly/1hour/${cityCode}?apikey=5bY5eqaA30ZpcVQmakQfmNr4I2YZGVi6`)
+    return this.http.get(`http://dataservice.accuweather.com/forecasts/v1/hourly/1hour/${cityCode}?apikey=5bY5eqaA30ZpcVQmakQfmNr4I2YZGVi6&metric=true`)
       /*.map((data) => {
         return new ForecastModels(data);
       });*/

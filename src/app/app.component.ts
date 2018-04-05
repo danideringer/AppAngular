@@ -16,11 +16,23 @@ export class MyApp {
   pages: Array<{title: string, component: any, params: any}>;
 
   rootPage = 'StationListPage';
-  detailsPage = 'DetailStationPage'
-
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private api: ApiProvider) {
     this.initializeApp();
+  }
 
+  ngOnViewLoad(){
+    this.api.device$.subscribe((data) => {
+      this.fillArray();
+      this.allDevice = data;
+      for (let entry of this.allDevice){
+        this.pages.push({
+          title: entry.name,
+          component: 'DetailStationPage',
+          params: entry
+        })
+      }  
+    })
   }
 
   initializeApp() {
@@ -30,7 +42,13 @@ export class MyApp {
     });
   }
 
+  fillArray(){
+    this.pages = [
+      { title: 'Home', component: 'StationListPage', params: '' }
+    ];
+  }
+
   openPage(page) {
-    this.nav.push(page.component);
+    this.nav.push(page.component, {data: page.params});
   }
 }

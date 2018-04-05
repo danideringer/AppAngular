@@ -30,6 +30,7 @@ export class GetForecastComponent {
         this.apiProv.getForecastHourly(this.cityCode['Key'])
           .subscribe(data => {
             this.hourlyForecast = data;
+            console.log(this.hourlyForecast)
           })
     })    
   }

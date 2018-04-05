@@ -1,4 +1,7 @@
 <!-- Generated template for the GetForecastComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-row *ngIf="hourlyForecast">
+  <ion-col col-12>
+    {{ hourlyForecast[0].IconPhrase }} {{ hourlyForecast[0].Temperature.Value }} {{ hourlyForecast[0].Temperature.Unit }} 
+    <ion-icon name="thermometer"></ion-icon>
+  </ion-col>
+</ion-row>
